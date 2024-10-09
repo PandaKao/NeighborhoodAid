@@ -174,7 +174,6 @@ This project was developed by **Mirasol Davila** in collaboration with:
 | **RESTful API Implementation** | Built the backend API using Express.js to follow RESTful principles for efficient and organized data handling.                                                         | Developed routes for CRUD operations across various models (e.g., user registration, feeds, reporting), ensuring data integrity and secure interactions with authentication middleware.                      |
 | **Full-Stack Development**  | Combined frontend and backend technologies to create a seamless and integrated platform.                                                                               | Utilized React and TypeScript for frontend development and Express.js with Sequelize for the backend, connecting components using Axios for RESTful API interactions and state management.                     |
 
-## Technologies Used
 
 ### Collaborators
 
@@ -201,14 +200,17 @@ This project was developed by **Mirasol Davila** in collaboration with:
   
 - **[Sammy Kordi](https://github.com/thepeoplesengineer)**:
     - **Community Report Page**:
-    - Developed `client/src/pages/CommunityReportPage.tsx` to display the community report page where users can view and submit reports.
+        - Developed `client/src/pages/CommunityReportPage.tsx` to display the community report page where users can view and submit reports in the early stages of the project.
     - **Database Model for Community Reports**:
-    - Created `server/models/reportCommunity.js` to define the model for community reports, including fields for title, description, location (stored as JSON), and other relevant information.
-     - 1 Merge Pull Request 
+        - Created `server/models/reportCommunity.js` to define the model for community reports, including fields for title, description, location (stored as JSON), and other relevant information in the early stages of the project.
+    - Contributed 1 pull request.  
+    - *Initially contributed in the early stages but later chose not to continue further involvement or collaboration. We appreciate their early efforts.*
 
 - **[Isaiah Skidmore](https://github.com/IsaiahSkidmore)**:
-    - Assisted in selecting the logo for the project.
-    - 1 Merge Pull Request       
+    - Assisted in selecting the logo for the project in the early stages.
+    - Contributed 1 pull request.  
+    - *Initially contributed in the early stages but later chose not to continue further involvement or collaboration. We appreciate their early efforts.*
+
 
 
 ## License
