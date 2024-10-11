@@ -3,10 +3,10 @@ import sequelize from "../config/connection.js";
 
 class User extends Model {
   // Define associations with Feed and Comment models
-  static associate(models) {
-    User.hasMany(models.Feed, { foreignKey: "userId" }); // One user has many feeds
-    User.hasMany(models.Comment, { foreignKey: "userId" }); // One user can have many comments
-  }
+  // static associate(models) {
+  //   User.hasMany(models.Feed, { foreignKey: "userId" }); // One user has many feeds
+  //   User.hasMany(models.Comment, { foreignKey: "userId" }); // One user can have many comments
+  // }
 }
 
 // Define the User model
@@ -32,6 +32,7 @@ User.init(
   {
     sequelize,
     modelName: "User",
+    tableName: "User",
     timestamps: true, // Automatically manages `createdAt` and `updatedAt`
   }
 );

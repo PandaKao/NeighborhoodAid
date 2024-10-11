@@ -2,21 +2,21 @@
   "development": {
     "username": "postgres",
     "password": "1234",
-    "database": "neighboorhoodAid",
+    "database": "neighborhoodaid_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "1234",
-    "database": "neighboorhoodAid_test",
+    "database": "neighborhoodaid_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "1234",
-    "database": "neighboorhoodAid_production",
+    "database": "neighborhoodaid_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }

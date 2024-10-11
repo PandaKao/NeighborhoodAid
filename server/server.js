@@ -5,7 +5,8 @@ import loggerMiddleware from "./middleware/loggerMiddleware.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sequelize from "./config/connection.js";
-// import seedAuthorityIssues from './seeds/issue-authority-seed.js';
+import { seedReportAuthority } from './seeds/issue-authority-seed.js';
+import { seedUsers } from './seeds/user-seeds.js';
 
 import authRoutes from "./routes/authRoutes.js";
 import feedRoutes from "./routes/api/feed.js";
@@ -48,20 +49,21 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Uncomment to seed database
-// (async () => {
-//   try {
-//     await sequelize.sync({ force: true }); // Drop & recreate tables
-//     await seedAuthorityIssues(); // Seed the database with issues
-//     console.log("Database seeded successfully.");
-//   } catch (error) {
-//     console.error("Failed to seed database:", error);
-//   }
-// })();
+(async () => {
+  try {
+    await sequelize.sync({ force: true }); // Drop & recreate tables
+    await seedUsers();
+    await seedReportAuthority(); // Seed the database with issues
+    console.log("Database seeded successfully.");
+  } catch (error) {
+    console.error("Failed to seed database:", error);
+  }
+})();
 
 (async () => {
   try {
     // Sync the models with the database
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ });
     console.log("Database synced successfully.");
 
     app.listen(PORT, () =>
