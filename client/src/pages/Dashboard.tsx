@@ -35,20 +35,20 @@ const Dashboard = () => {
   const [editContent, setEditContent] = useState<string>("");
   const [newComment, setNewComment] = useState<string>("");
 
-  const fetchFeeds = async () => {
-    try {
-      const token = localStorage.getItem("jwtToken");
-      const response = await axios.get(`/api/feed/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setFeedItems(response.data as FeedItem[]);
-    } catch (err) {
-      console.error("Error fetching feeds:", err);
-      setError("Error fetching feeds");
-    }
-  };
+  // const fetchFeeds = async () => {
+  //   try {
+  //     const token = localStorage.getItem("jwtToken");
+  //     const response = await axios.get(`/api/feed/${userId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setFeedItems(response.data as FeedItem[]);
+  //   } catch (err) {
+  //     console.error("Error fetching feeds:", err);
+  //     setError("Error fetching feeds");
+  //   }
+  // };
 
   const createFeed = async (e: React.FormEvent) => {
     e.preventDefault();
