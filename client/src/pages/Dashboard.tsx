@@ -168,7 +168,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchFeeds();
+    // fetchFeeds();
   }, [userId]);
 
   return (
