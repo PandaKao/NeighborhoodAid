@@ -3,6 +3,25 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+interface NominatimAddress {
+  house_number?: string;
+  road?: string;
+  city?: string;
+  town?: string;
+  village?: string;
+  state?: string;
+  postcode?: string;
+  country?: string;
+}
+
+interface NominatimResponse {
+  address: NominatimAddress;
+}
+
+interface OpenWeatherResponse {
+  name?: string;
+}
 // Custom marker icon
 const customMarkerIcon = new L.Icon({
   iconUrl: "/leaflet-images/marker-icon.png",
@@ -28,7 +47,7 @@ const MapWithAddress: React.FC<MapWithAddressProps> = ({
   // Fetch city name and address using Nominatim, with fallback to OpenWeather API
   const fetchLocationDetails = async (lat: number, lon: number) => {
     try {
-      const nominatimResponse = await axios.get(
+      const nominatimResponse = await axios.get<NominatimResponse>(
         "https://nominatim.openstreetmap.org/reverse",
         {
           params: {
@@ -53,9 +72,12 @@ const MapWithAddress: React.FC<MapWithAddressProps> = ({
       }, ${nominatimAddress.state}, ${nominatimAddress.postcode}, ${nominatimAddress.country}`;
       // If city is missing from Nominatim, fallback to OpenWeather geolocation
       if (!cityName) {
-        const openWeatherGeoResponse = await axios.get("/api/weather", {
-          params: { lat, lon },
-        });
+        const openWeatherGeoResponse = await axios.get<OpenWeatherResponse>(
+          "/api/weather",
+          {
+            params: { lat, lon },
+          },
+        );
         cityName = openWeatherGeoResponse.data.name || "Unknown City";
       }
       // Pass the lat, lon, and city data back to the parent component

@@ -16,6 +16,11 @@ interface WeatherData {
   };
 }
 
+interface IPResponse {
+  latitude: number;
+  longitude: number;
+}
+
 const Weather = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +29,7 @@ const Weather = () => {
   const fetchWeather = async (lat: number, lon: number) => {
     try {
       // Make the request to your backend server that handles the weather API call
-      const response = await axios.get("/api/weather", {
+      const response = await axios.get<WeatherData>("/api/weather", {
         params: { lat, lon },
       });
       setWeatherData(response.data); // Save the fetched weather data
@@ -38,7 +43,7 @@ const Weather = () => {
   const fetchLocationFromOpenWeather = async () => {
     try {
       // Use IP-based geolocation as a fallback
-      const response = await axios.get("https://ipapi.co/json"); // Third-party service for location data
+      const response = await axios.get<IPResponse>("https://ipapi.co/json"); // Third-party service for location data
       if (response.data) {
         const { latitude, longitude } = response.data;
         fetchWeather(latitude, longitude); // Fetch weather using OpenWeather geolocation
@@ -46,7 +51,7 @@ const Weather = () => {
     } catch (error) {
       console.error(
         "Failed to retrieve location from OpenWeather Geolocation API:",
-        error
+        error,
       );
       setError("Failed to retrieve location from OpenWeather Geolocation API");
     }
@@ -62,14 +67,14 @@ const Weather = () => {
         },
         (_) => {
           console.error(
-            "Browser geolocation permission denied, using OpenWeather Geolocation API"
+            "Browser geolocation permission denied, using OpenWeather Geolocation API",
           );
           fetchLocationFromOpenWeather(); // Fallback to OpenWeather geolocation
-        }
+        },
       );
     } else {
       console.error(
-        "Browser geolocation not supported, using OpenWeather Geolocation API"
+        "Browser geolocation not supported, using OpenWeather Geolocation API",
       );
       fetchLocationFromOpenWeather(); // Fallback if browser geolocation is not supported
     }

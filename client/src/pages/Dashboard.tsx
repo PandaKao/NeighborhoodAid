@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import DashboardNav from "../components/DashboardNav";
 import Weather from "../components/Weather";
 import Footer from "../components/Footer";
@@ -38,15 +38,12 @@ const Dashboard = () => {
   const fetchFeeds = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response: AxiosResponse<FeedItem[]> = await axios.get(
-        `/api/feed/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await axios.get(`/api/feed/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      setFeedItems(response.data);
+      });
+      setFeedItems(response.data as FeedItem[]);
     } catch (err) {
       console.error("Error fetching feeds:", err);
       setError("Error fetching feeds");
@@ -59,7 +56,7 @@ const Dashboard = () => {
 
     try {
       const token = localStorage.getItem("jwtToken");
-      const response: AxiosResponse<FeedItem> = await axios.post(
+      const response = await axios.post(
         "/api/feed",
         { content: newFeedContent },
         {
@@ -68,7 +65,7 @@ const Dashboard = () => {
           },
         },
       );
-      setFeedItems([response.data, ...feedItems]);
+      setFeedItems([response.data as FeedItem, ...feedItems]);
       setNewFeedContent("");
     } catch (err) {
       console.error("Error creating feed:", err);
@@ -79,7 +76,7 @@ const Dashboard = () => {
   const likeFeed = async (feedId: number) => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response: AxiosResponse<FeedItem> = await axios.post(
+      const response = await axios.post(
         `/api/feed/${feedId}/like`,
         {},
         {
@@ -89,7 +86,9 @@ const Dashboard = () => {
         },
       );
       setFeedItems(
-        feedItems.map((feed) => (feed.id === feedId ? response.data : feed)),
+        feedItems.map((feed) =>
+          feed.id === feedId ? (response.data as FeedItem) : feed,
+        ),
       );
     } catch (err) {
       console.error("Error liking feed:", err);
@@ -115,7 +114,7 @@ const Dashboard = () => {
   const updateFeed = async (feedId: number) => {
     try {
       const token = localStorage.getItem("jwtToken");
-      const response: AxiosResponse<FeedItem> = await axios.put(
+      const response = await axios.put(
         `/api/feed/${feedId}`,
         { content: editContent },
         {
@@ -125,7 +124,9 @@ const Dashboard = () => {
         },
       );
       setFeedItems(
-        feedItems.map((feed) => (feed.id === feedId ? response.data : feed)),
+        feedItems.map((feed) =>
+          feed.id === feedId ? (response.data as FeedItem) : feed,
+        ),
       );
       setEditingFeedId(null);
       setEditContent("");
@@ -140,7 +141,7 @@ const Dashboard = () => {
 
     try {
       const token = localStorage.getItem("jwtToken");
-      const response: AxiosResponse<CommentItem> = await axios.post(
+      const response = await axios.post(
         `/api/feed/${feedId}/comment`,
         { content: commentContent },
         {
@@ -152,7 +153,10 @@ const Dashboard = () => {
       setFeedItems(
         feedItems.map((feed) =>
           feed.id === feedId
-            ? { ...feed, comments: [...feed.comments, response.data] }
+            ? {
+                ...feed,
+                comments: [...feed.comments, response.data as CommentItem],
+              }
             : feed,
         ),
       );

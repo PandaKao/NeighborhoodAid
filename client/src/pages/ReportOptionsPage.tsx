@@ -25,7 +25,7 @@ const ReportOptionsPage = () => {
   const fetchReports = async () => {
     try {
       const response = await axios.get(`/api/reports?userId=${userId}`);
-      setReports(response.data);
+      setReports(response.data as Report[]);
     } catch (error) {
       setError("Failed to fetch reports");
     }
@@ -35,7 +35,7 @@ const ReportOptionsPage = () => {
     fetchReports();
   }, [userId]); //depend on usrId to refetch if it changes
 
-  return ( 
+  return (
     <>
       {!authLoggedIn ? (
         <>
@@ -123,5 +123,3 @@ const ReportOptionsPage = () => {
 };
 
 export default ReportOptionsPage;
-
-
