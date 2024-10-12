@@ -1,4 +1,4 @@
-import communityImage from "../assets/community_2.svg";
+import communityImage from "../../public/community_2.svg";
 
 const Hero = () => (
   <section

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import reportImage from "../assets/report.svg";
-import trackProgressImage from "../assets/track_progress.svg";
-import weatherImage from "../assets/weather.svg";
-import musicImage from "../assets/music.svg";
-import conversationImage from "../assets/join_conversation.svg";
+import reportImage from "../../public/report.svg";
+import trackProgressImage from "../../public/track_progress.svg";
+import weatherImage from "../../public/weather.svg";
+import musicImage from "../../public/music.svg";
+import conversationImage from "../../public/join_conversation.svg";
 
 const Features = () => {
   const [activeTab, setActiveTab] = useState("panel-1");

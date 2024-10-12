@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/neighborhood_logo.svg";
+import logo from "../../public/neighborhood_logo.svg";
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);

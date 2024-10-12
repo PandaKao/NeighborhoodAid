@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/neighborhood_logo.svg";
+import logo from "../../public/neighborhood_logo.svg";
 import authService from "../services/authService";
 
 const DashboardNav = () => {

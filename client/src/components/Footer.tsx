@@ -1,9 +1,9 @@
 // Importing all social media icons
-import logoFooter from "../assets/neighborhood_logo_footer.svg";
-import facebookIcon from "../assets/icon-facebook.svg";
-import twitterIcon from "../assets/icon-twitter.svg";
-import pinterestIcon from "../assets/icon-pinterest.svg";
-import instagramIcon from "../assets/icon-instagram.svg";
+import logoFooter from "../../public/neighborhood_logo_footer.svg";
+import facebookIcon from "../../public/icon-facebook.svg";
+import twitterIcon from "../../public/icon-twitter.svg";
+import pinterestIcon from "../../public/icon-pinterest.svg";
+import instagramIcon from "../../public/icon-instagram.svg";
 
 const Footer = () => (
   <footer className="py-16 bg-veryDarkViolet">
