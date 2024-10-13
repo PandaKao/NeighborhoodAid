@@ -43,6 +43,10 @@ ReportAuthority.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,  // Assuming userId references the user who submitted the report

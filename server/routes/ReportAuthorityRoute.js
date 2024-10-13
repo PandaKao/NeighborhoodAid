@@ -1,13 +1,15 @@
 import express from 'express';
 import reportAuthority from '../models/reportAuthority.js';
 import authMiddleware from '../middleware/authMiddleware.js';  // Middleware to get user ID from auth
+import setReportType from '../middleware/reportTypeMiddleware.js';
 import axios from 'axios'; // Make sure to import axios
 
 const router = express.Router();
+router.use(setReportType); // Apply middlware to set report type
 
 // Create a new report (protected route)
-router.post("/", authMiddleware, async (req, res) => {
-  const { title, description, location, email, phone, contacted } = req.body;
+router.post("/authorities", authMiddleware, async (req, res) => {
+  const { title, description, location, email, phone, contacted, type } = req.body;
   const userId = req.user.id; // Assuming authMiddleware adds the user's ID to req.user
 
   try {
@@ -44,6 +46,7 @@ router.post("/", authMiddleware, async (req, res) => {
       email,
       phone,
       contacted,
+      type,
       weather: {
         temperature: weatherData.main.temp,
         condition: weatherData.weather[0].description,
@@ -61,5 +64,19 @@ router.post("/", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Failed to create report" });
   }
 });
+
+// Fetch reports for user
+router.get("/", authMiddleware, async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const reports = await reportAuthority.findAll({ userId }); // Searches database for reports associated with user
+
+    res.status(200).json(reports);
+  } catch (error) {
+    console.error("Error fetching reports: ", error);
+    res.status(500).json({ message: "Failed to fetch reports" });
+  }
+})
 
 export default router;

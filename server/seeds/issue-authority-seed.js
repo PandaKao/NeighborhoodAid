@@ -18,6 +18,7 @@ export const seedReportAuthority = async () => {
         email: "example1@email.com",
         phone: "555-1234",
         contacted: true,
+        type: "Authorities",
         userId: 1,
       },
       {
@@ -35,6 +36,7 @@ export const seedReportAuthority = async () => {
         email: "example2@email.com",
         phone: "555-5678",
         contacted: false,
+        type: "Authorities",
         userId: 2,
       },
     ];
