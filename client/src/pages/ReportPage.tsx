@@ -20,8 +20,9 @@ const ReportPage = () => {
   } | null>(null);
 
   const [weatherData, setWeatherData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState<string>("");
+  const [modalType, setModalType] = useState<"error" | "success">("error");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -36,10 +37,11 @@ const ReportPage = () => {
         params: { lat, lon },
       });
       setWeatherData(response.data);
-      setError(null);
+      setModalMessage("");
       setIsModalOpen(false);
     } catch (error) {
-      setError("Failed to fetch weather data");
+      setModalMessage("Failed to fetch weather data");
+      setModalType("error");
       setIsModalOpen(true);
     }
   };
@@ -48,7 +50,7 @@ const ReportPage = () => {
   const handleLocationSelected = (
     lat: number,
     lon: number,
-    addressDetails: any
+    addressDetails: any,
   ) => {
     setLocationDetails({ ...addressDetails, lat, lon });
     fetchWeather(lat, lon);
@@ -60,6 +62,8 @@ const ReportPage = () => {
     setEmail("");
     setPhone("");
     setContactedAuthorities(false);
+    setModalMessage("");
+    setIsModalOpen(false);
   };
 
   // Keep your handleSubmit function
@@ -85,8 +89,12 @@ const ReportPage = () => {
       });
       console.log("Report submitted successfully:", response.data);
       resetForm();
+      setModalMessage("Report submitted successfully");
+      setModalType("success");
+      setIsModalOpen(true);
     } catch (error) {
-      setError("Failed to report the issue");
+      setModalMessage("Failed to report the issue");
+      setModalType("error");
       setIsModalOpen(true);
     } finally {
       setIsSubmitting(false);
@@ -105,12 +113,12 @@ const ReportPage = () => {
             <div className="container mx-auto">
               <h2 className="text-2xl font-bold mb-4">Report an Issue</h2>
 
-              {/* Error Modal */}
+              {/* Modal */}
               <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                message={error || ""}
-                type="error"
+                message={modalMessage}
+                type={modalType}
               />
 
               {/* Form with your handleSubmit */}
@@ -203,14 +211,16 @@ const ReportPage = () => {
                     type="checkbox"
                     className="mr-2"
                     checked={contactedAuthorities}
-                    onChange={() => setContactedAuthorities(!contactedAuthorities)}
+                    onChange={() =>
+                      setContactedAuthorities(!contactedAuthorities)
+                    }
                   />
                   <span>Yes</span>
                 </div>
 
                 <button
                   type="submit"
-                  className={`p-2 bg-blue-500 text-white rounded ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`p-2 bg-blue-500 text-white rounded ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Report"}
