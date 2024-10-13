@@ -113,14 +113,6 @@ const ReportPage = () => {
             <div className="container mx-auto">
               <h2 className="text-2xl font-bold mb-4">Report an Issue</h2>
 
-              {/* Modal */}
-              <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                message={modalMessage}
-                type={modalType}
-              />
-
               {/* Form with your handleSubmit */}
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -226,6 +218,14 @@ const ReportPage = () => {
                   {isSubmitting ? "Submitting..." : "Submit Report"}
                 </button>
               </form>
+
+              {/* Modal */}
+              <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                message={modalMessage}
+                type={modalType}
+              />
             </div>
           </main>
           <Footer />

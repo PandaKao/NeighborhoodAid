@@ -30,7 +30,6 @@ const ReportOptionsPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Fetched reports: ", response.data);
       setReports(response.data as Report[]);
     } catch (error) {
       setError("Failed to fetch reports");
