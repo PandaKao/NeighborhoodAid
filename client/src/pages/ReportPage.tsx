@@ -87,7 +87,6 @@ const ReportPage = () => {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
         },
       });
-      console.log("Report submitted successfully:", response.data);
       resetForm();
       setModalMessage("Report submitted successfully");
       setModalType("success");
