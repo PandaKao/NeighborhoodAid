@@ -82,7 +82,7 @@ const ReportPage = () => {
     };
 
     try {
-      const response = await axios.post("/api/report/authorities", reportData, {
+      await axios.post("/api/report/authorities", reportData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
         },
