@@ -13,15 +13,6 @@ router.post("/authorities", authMiddleware, async (req, res) => {
   const userId = req.user.id; // Assuming authMiddleware adds the user's ID to req.user
 
   try {
-    // Fetch weather data from the weather route
-    const weatherResponse = await axios.get(
-      "http://localhost:3001/api/weather",
-      {
-        params: { lat: location.lat, lon: location.lon },
-      },
-    );
-    const weatherData = weatherResponse.data;
-
     // Fetch city and address from Nominatim
     const addressResponse = await axios.get(
       `https://nominatim.openstreetmap.org/reverse`,
@@ -37,6 +28,14 @@ router.post("/authorities", authMiddleware, async (req, res) => {
       },
     );
     const locationData = addressResponse.data;
+
+    // Fetch weather data from OpenWeather API based on the location
+    const weatherApiKey = process.env.WEATHER_API_KEY;
+    const weatherResponse = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${weatherApiKey}&units=imperial`
+    );
+
+    const weatherData = weatherResponse.data;
 
     // Create a new report with weather and location data
     const newReport = await reportAuthority.create({

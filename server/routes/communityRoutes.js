@@ -59,7 +59,7 @@ router.post('/api/issues', async (req, res) => {
     // Fetch weather data from OpenWeather API based on the location
     const weatherApiKey = process.env.WEATHER_API_KEY;
     const weatherResponse = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=${weatherApiKey}&units=imperial`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${weatherApiKey}&units=imperial`
     );
 
     const weatherData = weatherResponse.data;
