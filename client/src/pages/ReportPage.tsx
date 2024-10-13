@@ -10,7 +10,7 @@ import { Navigate } from "react-router-dom";
 const ReportPage = () => {
   // Add auth logic from your team member's code
   const authLoggedIn = authService.loggedIn(); // Check if the user is logged in
-  
+
   // Keep your state and form handling logic
   const [locationDetails, setLocationDetails] = useState<{
     fullAddress: string;
@@ -23,6 +23,11 @@ const ReportPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [contactedAuthorities, setContactedAuthorities] = useState(false);
 
   // Fetch weather data
   const fetchWeather = async (lat: number, lon: number) => {
@@ -49,18 +54,27 @@ const ReportPage = () => {
     fetchWeather(lat, lon);
   };
 
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setEmail("");
+    setPhone("");
+    setContactedAuthorities(false);
+  };
+
   // Keep your handleSubmit function
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const reportData = {
-      title: "Sample Title",
-      description: "Sample description",
-      email: "example@example.com",
-      phone: "123-456-7890",
-      contacted: false,
-      location: JSON.stringify({ lat: locationDetails?.lat, lon: locationDetails?.lon }),
+      title,
+      description,
+      location: { lat: locationDetails?.lat, lon: locationDetails?.lon },
+      weatherData: weatherData,
+      contacted: contactedAuthorities,
+      email,
+      phone,
     };
 
     try {
@@ -70,6 +84,7 @@ const ReportPage = () => {
         },
       });
       console.log("Report submitted successfully:", response.data);
+      resetForm();
     } catch (error) {
       setError("Failed to report the issue");
       setIsModalOpen(true);
@@ -108,6 +123,8 @@ const ReportPage = () => {
                     type="text"
                     className="w-full p-2 border rounded"
                     placeholder="Enter issue title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                   />
                 </div>
@@ -119,6 +136,8 @@ const ReportPage = () => {
                   <textarea
                     className="w-full p-2 border rounded"
                     placeholder="Describe the issue"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     required
                   />
                 </div>
@@ -156,6 +175,8 @@ const ReportPage = () => {
                     type="email"
                     className="w-full p-2 border rounded"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -168,6 +189,8 @@ const ReportPage = () => {
                     type="text"
                     className="w-full p-2 border rounded"
                     placeholder="Enter your phone number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     required
                   />
                 </div>
@@ -176,7 +199,12 @@ const ReportPage = () => {
                   <label className="block text-gray-700 font-bold mb-2">
                     Have You Contacted Local Authorities?
                   </label>
-                  <input type="checkbox" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={contactedAuthorities}
+                    onChange={() => setContactedAuthorities(!contactedAuthorities)}
+                  />
                   <span>Yes</span>
                 </div>
 

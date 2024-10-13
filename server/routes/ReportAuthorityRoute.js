@@ -29,6 +29,9 @@ router.post("/", authMiddleware, async (req, res) => {
           lat: location.lat,
           lon: location.lon,
         },
+        headers: {
+          'User-Agent': 'NeighborhoodAid',
+        }
       },
     );
     const locationData = addressResponse.data;
